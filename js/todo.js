@@ -1,3 +1,4 @@
+import { changeActiveBtn, stop } from './control.js';
 import { state } from './state.js';
 
 const titleElem = document.querySelector('.title');
@@ -32,6 +33,24 @@ const addTodo = title => {
   return todo;
 };
 
+const updateTodo = todo => {
+  const todoList = getTodo();
+  const todoItem = todoList.find(item => item.id === todo.id);
+  todoItem.title = todo.title;
+  todoItem.pomodoro = todo.pomodoro;
+  localStorage.setItem('pomodoro', JSON.stringify(todoList));
+};
+
+const deleteTodo = todo => {
+  const todoList = getTodo();
+  const newTodoList = todoList.filter(item => item.id !== todo.id);
+  if (todo.id === state.activeTodo.id) {
+    state.activeTodo = newTodoList[newTodoList.length - 1];
+  }
+
+  localStorage.setItem('pomodoro', JSON.stringify(newTodoList));
+};
+
 const createTodoListItem = todo => {
   if (todo.id !== 'default') {
     const todoItem = document.createElement('li');
@@ -56,6 +75,28 @@ const createTodoListItem = todo => {
     todoItemWrapper.append(todoBtn, todoEdit, todoDel);
 
     todoListElem.prepend(todoItem);
+
+    todoBtn.addEventListener('click', () => {
+      state.activeTodo = todo;
+      showTodo();
+      changeActiveBtn('work');
+      stop();
+    });
+
+    todoEdit.addEventListener('click', () => {
+      todo.title = prompt('Название задачи', todo.title);
+      todoBtn.textContent = todo.title;
+      updateTodo(todo);
+      showTodo();
+    });
+
+    todoDel.addEventListener('click', () => {
+      deleteTodo(todo);
+
+      showTodo();
+
+      todoItem.remove();
+    });
   }
 };
 
@@ -67,21 +108,24 @@ const renderTodoList = list => {
 };
 
 const showTodo = () => {
-  titleElem.textContent = state.activeTodo.title;
-  countNum.textContent = state.activeTodo.pomodoro;
+  if (state.activeTodo) {
+    titleElem.textContent = state.activeTodo.title;
+    countNum.textContent = state.activeTodo.pomodoro;
+  } else {
+    titleElem.textContent = '';
+    countNum.textContent = 0;
+  }
 };
 
 export const InitTodo = () => {
   const todoList = getTodo();
 
   if (!todoList.length) {
-    state.activeTodo = [
-      {
-        id: 'default',
-        pomodoro: 0,
-        title: 'Помодоро',
-      },
-    ];
+    state.activeTodo = {
+      id: 'default',
+      pomodoro: 0,
+      title: 'Помодоро',
+    };
   } else {
     state.activeTodo = todoList[todoList.length - 1];
   }
