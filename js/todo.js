@@ -33,8 +33,11 @@ const addTodo = title => {
   return todo;
 };
 
-const updateTodo = todo => {
+export const updateTodo = todo => {
   const todoList = getTodo();
+  if (!todoList.length) {
+    return;
+  }
   const todoItem = todoList.find(item => item.id === todo.id);
   todoItem.title = todo.title;
   todoItem.pomodoro = todo.pomodoro;
@@ -92,9 +95,7 @@ const createTodoListItem = todo => {
 
     todoDel.addEventListener('click', () => {
       deleteTodo(todo);
-
       showTodo();
-
       todoItem.remove();
     });
   }
@@ -107,7 +108,7 @@ const renderTodoList = list => {
   todoListElem.append(li);
 };
 
-const showTodo = () => {
+export const showTodo = () => {
   if (state.activeTodo) {
     titleElem.textContent = state.activeTodo.title;
     countNum.textContent = state.activeTodo.pomodoro;
