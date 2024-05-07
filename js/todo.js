@@ -4,6 +4,14 @@ import { state } from './state.js';
 const titleElem = document.querySelector('.title');
 const countNum = document.querySelector('.count_num');
 const todoListElem = document.querySelector('.todo__list');
+const todoFinanceBtn = document.querySelector('.todo__finance_btn');
+const financeManager = document.querySelector('.finance');
+
+todoFinanceBtn.onclick = function () {
+  financeManager.style.display === 'block'
+    ? (financeManager.style.display = 'none')
+    : (financeManager.style.display = 'block');
+};
 
 const li = document.createElement('li');
 li.classList.add('todo__item');
@@ -94,6 +102,7 @@ const createTodoListItem = todo => {
     });
 
     todoDel.addEventListener('click', () => {
+      const title = confirm('Вы действительно хотите удалить задачу?');
       deleteTodo(todo);
       showTodo();
       todoItem.remove();
@@ -118,7 +127,7 @@ export const showTodo = () => {
   }
 };
 
-export const InitTodo = () => {
+export const initTodo = () => {
   const todoList = getTodo();
 
   if (!todoList.length) {

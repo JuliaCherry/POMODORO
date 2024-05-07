@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,66 +8,266 @@
     <link rel="icon" type="image/svg+xml" href="img/logo.svg" />
     <link rel="icon" type="image/png" href="img/favicon.png" />
 
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script src="js/script.js" type="module"></script>
 
     <title>Помодоро</title>
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/report.css" />
+    <link rel="stylesheet" href="css/overlayscrollbars.min.css" />
   </head>
 
   <body>
-    <div class="container">
-      <div class="todo">
-        <h2 class="todo__title">Задачи</h2>
-        <ol class="todo__list">
-          <li class="todo__item">
-            <div class="todo__item-wrapper">
-              <button class="todo__btn">Написать Pomodoro</button>
-              <button class="todo__edit" aria-label="Редактировать"></button>
-              <button class="todo__del" aria-label="Удалить"></button>
-            </div>
-          </li>
-          <li class="todo__item">
-            <button class="todo__add">Добавить новую задачу</button>
-          </li>
-        </ol>
-      </div>
+    <section class="pomodoro">
+      <div class="container pomodoro__container">
+        <div class="todo">
+          <h2 class="todo__title">Задачи</h2>
+          <ol class="todo__list">
+            <li class="todo__item">
+              <div class="todo__item-wrapper">
+                <button class="todo__btn">Написать Pomodoro</button>
+                <button class="todo__edit" aria-label="Редактировать"></button>
+                <button class="todo__del" aria-label="Удалить"></button>
+              </div>
+            </li>
+            <li class="todo__item">
+              <button class="todo__add">Добавить новую задачу</button>
+            </li>
+          </ol>
 
-      <div class="timer">
-        <div class="header">
-          <h1 class="header__title">Помодоро</h1>
-
-          <img src="img/logo.svg" alt="Логотип" />
+          <div class="todo__finance">
+            <h2 class="todo__finance_title">Держи финансы под контролем</h2>
+            <button class="todo__finance_btn">
+              <a class="todo__finance_link" href="#finance">Войти</a>
+            </button>
+          </div>
         </div>
 
-        <div class="navigation">
-          <button
-            class="navigation__btn navigation__btn_active"
-            data-use="work"
-          >
-            Помодоро
-          </button>
-          <button class="navigation__btn" data-use="break">Перерыв</button>
-          <button class="navigation__btn" data-use="relax">Отдых</button>
+        <div class="timer">
+          <div class="header">
+            <h1 class="header__title">Тайм-менеджер Помодоро</h1>
+
+            <img src="img/logo.svg" alt="Логотип" />
+          </div>
+
+          <div class="navigation">
+            <button
+              class="navigation__btn navigation__btn_active"
+              data-use="work"
+            >
+              Помодоро
+            </button>
+            <button class="navigation__btn" data-use="break">Перерыв</button>
+            <button class="navigation__btn" data-use="relax">Отдых</button>
+          </div>
+
+          <p class="time">
+            <span class="time__minutes">14</span>:<span class="time__seconds"
+              >18</span
+            >
+          </p>
+
+          <p class="title">Написать Pomodoro</p>
+          <div class="control">
+            <button class="control__btn control__btn_start">Старт</button>
+            <button class="control__btn control__btn_stop">Стоп</button>
+          </div>
         </div>
 
-        <p class="time">
-          <span class="time__minutes">14</span>:<span class="time__seconds"
-            >18</span
-          >
-        </p>
+        <div class="count">
+          <p class="count_num">3</p>
+          <p class="count_text">Кол-во помодорок</p>
+        </div>
 
-        <p class="title">Написать Pomodoro</p>
-        <div class="control">
-          <button class="control__btn control__btn_start">Старт</button>
-          <button class="control__btn control__btn_stop">Стоп</button>
+        <div class="decoration">
+          <div class="decoration__img decoration__img-1"></div>
+          <div class="decoration__img decoration__img-2"></div>
         </div>
       </div>
+    </section>
 
-      <div class="count">
-        <p class="count_num">3</p>
-        <p class="count_text">Кол-во помодорок</p>
+    <section class="finance" id="finance">
+      <div class="container finance__container">
+        <header class="finance__header">
+          <img
+            class="finance__logo"
+            src="./img/logofinance.png"
+            alt="Логотип MoneySafe"
+          />
+          <button class="finance__report">Отчет</button>
+        </header>
+
+        <form class="finance__form">
+          <fieldset class="finance__details">
+            <input
+              class="finance__input finance__input--category"
+              type="text"
+              name="category"
+              list="categoryList"
+              placeholder="Выберите категорию"
+              required
+            />
+
+            <datalist id="categoryList"></datalist>
+
+            <input
+              type="number"
+              class="finance__input finance__input--amount"
+              placeholder="Сумма"
+              name="amount"
+              required
+            />
+
+            <textarea
+              class="finance__description"
+              name="description"
+              placeholder="Описание операции"
+              required
+            ></textarea>
+          </fieldset>
+
+          <fieldset class="finance__balance">
+            <button
+              data-tooltip="Расходы"
+              class="finance__button"
+              type="submit"
+              data-type-operation="expenses"
+              aria-label="Добавить расходы"
+            >
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 60 60"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="30"
+                  cy="30"
+                  r="29"
+                  fill="white"
+                  fill-opacity="0.6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path
+                  d="M36.2631 28.4112V32.75H22.8391V28.4112H36.2631Z"
+                  fill="#0038FF"
+                />
+              </svg>
+            </button>
+
+            <p class="finance__amount">0</p>
+
+            <button
+              class="finance__button"
+              type="submit"
+              data-type-operation="income"
+              aria-label="Добавить доходы"
+            >
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 60 60"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="29.9999"
+                  cy="30"
+                  r="29"
+                  fill="white"
+                  fill-opacity="0.6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path
+                  d="M27.5021 39.2383V19.0877H32.0738V39.2383H27.5021ZM19.7127 31.4489V26.8771H39.8632V31.4489H19.7127Z"
+                  fill="#0038FF"
+                />
+              </svg>
+            </button>
+          </fieldset>
+        </form>
+
+        <div class="report">
+          <div class="container report__container">
+            <h2 class="report__title">Отчет</h2>
+
+            <form class="report__dates">
+              <div class="report__date">
+                <label for="start-date">Начало периода</label>
+                <input type="date" id="start-date" name="startDate" />
+              </div>
+
+              <div class="report__date">
+                <label for="end-date">Конец периода</label>
+                <input type="date" id="end-date" name="endDate" />
+              </div>
+
+              <button class="report__button">Показать</button>
+            </form>
+
+            <table class="report__table">
+              <thead>
+                <tr>
+                  <th
+                    class="report__header-cell"
+                    data-sort="category"
+                    data-dir="up"
+                  >
+                    Категория
+                  </th>
+                  <th
+                    class="report__header-cell"
+                    data-sort="amount"
+                    data-dir="up"
+                  >
+                    Сумма
+                  </th>
+                  <th
+                    class="report__header-cell"
+                    data-sort="description"
+                    data-dir="up"
+                  >
+                    Описание
+                  </th>
+                  <th
+                    class="report__header-cell"
+                    data-sort="date"
+                    data-dir="up"
+                  >
+                    Дата
+                  </th>
+                  <th
+                    class="report__header-cell"
+                    data-sort="type"
+                    data-dir="up"
+                  >
+                    Действие
+                  </th>
+                  <th class="report__header-cell"></th>
+                </tr>
+              </thead>
+
+              <tbody class="report__operation-list"></tbody>
+            </table>
+
+            <button class="report__add-button" id="generateChartButton">
+              Сформировать график
+            </button>
+
+            <div class="report__chart"></div>
+
+            <button class="report__close">&#10006;</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   </body>
 </html>

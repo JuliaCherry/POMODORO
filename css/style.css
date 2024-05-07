@@ -5,7 +5,7 @@
   src: local(''),
     url('../fonts/lobster-v28-latin_cyrillic-regular.woff2') format('woff2'),
     /* Chrome 26+, Opera 23+, Firefox 39+ */
-    url('../fonts/lobster-v28-latin_cyrillic-regular.woff') format('woff');
+      url('../fonts/lobster-v28-latin_cyrillic-regular.woff') format('woff');
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
@@ -24,9 +24,14 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: Lobster, sans-serif;
-  background-color: #FFF8EE;
-  color: #F85959;
-  display: flex;
+  background-color: #fff8ee;
+  color: #f85959;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
 }
 
 img,
@@ -65,16 +70,33 @@ fieldset {
   margin: 0;
 }
 
+fieldset {
+  padding: 0;
+  border: none;
+}
+
 iframe {
   border: none;
+}
+
+input,
+textarea {
+  font: inherit;
+}
+
+.pomodoro {
+  display: flex;
+  padding: 80px 0;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 10px;
+}
+
+.pomodoro__container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 2fr 2fr 2fr;
   align-items: center;
 }
 
@@ -88,12 +110,12 @@ iframe {
   align-items: center;
   margin: 0 auto;
   max-width: max-content;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
 }
 
 .header__title {
-  color: #C44747;
-  margin-right: 16px;
+  color: #c44747;
+  margin-right: 5px;
 }
 
 .navigation {
@@ -105,7 +127,7 @@ iframe {
 .navigation__btn {
   width: 120px;
   height: 40px;
-  font-size: 16px;
+  font-size: 24px;
   text-align: center;
   margin-right: 20px;
   border-radius: 25px;
@@ -113,7 +135,7 @@ iframe {
 
 .navigation__btn:hover {
   background-color: #f53f3f;
-  color: #FFF8EE;
+  color: #fff8ee;
 }
 
 .navigation__btn:last-child {
@@ -122,13 +144,13 @@ iframe {
 
 .navigation__btn_active {
   pointer-events: none;
-  color: #FFF8EE;
-  background-color: #F85959;
+  color: #fff8ee;
+  background-color: #f85959;
 }
 
 .time {
   font-size: 120px;
-  color: #F85959;
+  color: #f85959;
   text-align: center;
   margin-bottom: 60px;
 }
@@ -150,8 +172,8 @@ iframe {
   font-size: 24px;
   line-height: 30px;
   text-align: center;
-  color: #FFF8EE;
-  background-color: #F85959;
+  color: #fff8ee;
+  background-color: #f85959;
   border-radius: 25px;
   margin-right: 30px;
 }
@@ -165,7 +187,7 @@ iframe {
 }
 
 .todo__title {
-  padding-left: 30px;
+  text-align: center;
 }
 
 .todo__list {
@@ -173,13 +195,33 @@ iframe {
 }
 
 .todo__item {
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .todo__item-wrapper {
   display: grid;
   grid-template-columns: 1fr min-content min-content;
   align-items: center;
+}
+
+.todo__finance {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.todo__finance_btn {
+  background-color: #f85959;
+  width: 160px;
+  height: 40px;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+  color: #fff8ee;
+  border-radius: 25px;
 }
 
 .todo__btn {
@@ -194,7 +236,7 @@ iframe {
   display: block;
   height: 1px;
   flex-grow: 1;
-  border-bottom: 1px dotted #F85959;
+  border-bottom: 1px dotted #f85959;
 }
 
 .todo__btn:hover {
@@ -206,7 +248,7 @@ iframe {
   display: block;
   width: 16px;
   height: 16px;
-  background-image: url("../img/edit.svg");
+  background-image: url('../img/edit.svg');
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -223,7 +265,7 @@ iframe {
   display: block;
   width: 16px;
   height: 16px;
-  background-image: url("../img/delete.svg");
+  background-image: url('../img/delete.svg');
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -251,5 +293,63 @@ iframe {
 }
 
 .count_text {
-  font-size: 18px;
+  font-size: 20px;
+}
+
+.decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.decoration__img {
+  position: absolute;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.decoration__img-1 {
+  background-image: url(../img/tomato.png);
+  width: 180px;
+  height: 180px;
+  filter: drop-shadow(0px 10px 30px rgba(164, 7, 2, 0.5));
+  top: 2%;
+  right: 9%;
+  animation: flying1 2s ease-in-out;
+}
+
+.decoration__img-2 {
+  background-image: url(../img/timer.png);
+  width: 180px;
+  height: 180px;
+  filter: drop-shadow(0px 4px 20px rgba(17, 7, 108, 0.5));
+  top: 2%;
+  left: 5%;
+  animation: flying2 2s ease-in-out;
+  rotate: -20deg;
+}
+
+@keyframes flying1 {
+  0% {
+    top: -10%;
+    right: -100%;
+  }
+
+  100% {
+    top: 2%;
+    left: 79%;
+  }
+}
+
+@keyframes flying2 {
+  0% {
+    top: 100%;
+    left: -100%;
+  }
+
+  100% {
+    top: 2%;
+    left: 5%;
+  }
 }

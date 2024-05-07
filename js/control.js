@@ -5,6 +5,7 @@ const btnStart = document.querySelector('.control__btn_start');
 const btnStop = document.querySelector('.control__btn_stop');
 const navigationBtns = document.querySelectorAll('.navigation__btn');
 
+//переключение между верхними кнопками
 export const changeActiveBtn = dataUse => {
   state.status = dataUse;
 
@@ -17,6 +18,7 @@ export const changeActiveBtn = dataUse => {
   }
 };
 
+//остановка таймера
 export const stop = () => {
   clearTimeout(state.timerId);
   state.isActive = false;
@@ -25,6 +27,7 @@ export const stop = () => {
   showTime(state.timeLeft);
 };
 
+//запуск и остановка таймера
 export const initControl = () => {
   btnStart.addEventListener('click', () => {
     if (state.isActive) {
@@ -45,6 +48,5 @@ export const initControl = () => {
       stop();
     });
   }
-
   showTime(state.timeLeft);
 };

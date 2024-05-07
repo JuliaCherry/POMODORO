@@ -7,6 +7,7 @@ import { addZero } from './util.js';
 const minutesElem = document.querySelector('.time__minutes');
 const secondsElem = document.querySelector('.time__seconds');
 
+//отображение таймера на странице
 export const showTime = seconds => {
   minutesElem.textContent = addZero(Math.floor(seconds / 60));
   secondsElem.textContent = addZero(seconds % 60);
@@ -14,6 +15,7 @@ export const showTime = seconds => {
 
 const title = document.title;
 
+//вызываем таймер
 export const startTimer = () => {
   const countdown = new Date().getTime() + state.timeLeft * 1000;
 
@@ -35,6 +37,7 @@ export const startTimer = () => {
     document.title = title;
     clearTimeout(state.timerId);
 
+    //добавление помадорки
     if (state.status === 'work') {
       state.activeTodo.pomodoro += 1;
       updateTodo(state.activeTodo);
@@ -49,8 +52,8 @@ export const startTimer = () => {
     } else {
       state.status = 'work';
     }
-
     alarm();
+
     state.timeLeft = state[state.status] * 60;
     changeActiveBtn(state.status);
     showTodo();
